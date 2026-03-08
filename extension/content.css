@@ -1,0 +1,281 @@
+/* ===== CRAAP Checker — Injected Page Styles ===== */
+
+/* --- Highlight marks --- */
+mark.craap-highlight {
+  border-radius: 3px;
+  padding: 1px 2px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+mark.craap-hl-green {
+  background-color: rgba(63, 185, 80, 0.25);
+  border-bottom: 2px solid rgba(63, 185, 80, 0.7);
+  color: inherit;
+}
+mark.craap-hl-green:hover {
+  background-color: rgba(63, 185, 80, 0.40);
+  box-shadow: 0 0 8px rgba(63, 185, 80, 0.3);
+}
+
+mark.craap-hl-yellow {
+  background-color: rgba(210, 153, 34, 0.25);
+  border-bottom: 2px solid rgba(210, 153, 34, 0.7);
+  color: inherit;
+}
+mark.craap-hl-yellow:hover {
+  background-color: rgba(210, 153, 34, 0.40);
+  box-shadow: 0 0 8px rgba(210, 153, 34, 0.3);
+}
+
+mark.craap-hl-red {
+  background-color: rgba(248, 81, 73, 0.25);
+  border-bottom: 2px solid rgba(248, 81, 73, 0.7);
+  color: inherit;
+}
+mark.craap-hl-red:hover {
+  background-color: rgba(248, 81, 73, 0.40);
+  box-shadow: 0 0 8px rgba(248, 81, 73, 0.3);
+}
+
+/* Pulsing badge for sentences that have a suggested fix */
+mark.craap-has-fix {
+  position: relative;
+  border-bottom-style: dashed;
+  animation: craap-fix-pulse 2s ease-in-out infinite;
+}
+
+@keyframes craap-fix-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(255, 215, 0, 0.2); }
+  50%      { box-shadow: 0 0 14px rgba(255, 215, 0, 0.5); }
+}
+
+.craap-fix-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-left: 2px;
+  vertical-align: super;
+  cursor: pointer;
+  animation: craap-badge-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes craap-badge-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* --- Floating Tooltip --- */
+#craap-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 2147483647;
+  max-width: 420px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+  pointer-events: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Tooltip header — score + speaker icon */
+.craap-tip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.craap-tip-header strong {
+  font-size: 13px;
+}
+
+/* TTS speaker button */
+.craap-tts-wrap {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.craap-tts-wrap:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.craap-tts-playing {
+  opacity: 1 !important;
+  animation: craap-pulse 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes craap-pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.2); }
+}
+
+.craap-tts-btn {
+  display: block;
+}
+
+/* Rationale text */
+.craap-tip-rationale {
+  color: #e6edf3;
+  margin-bottom: 4px;
+}
+
+/* Suggested fix — prominent glowing gold box */
+.craap-tip-fix {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1.5px solid rgba(255, 215, 0, 0.5);
+  color: #ffd700;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.08);
+}
+
+.craap-tip-fix-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #ffc107;
+  margin-bottom: 4px;
+}
+
+.craap-fix-icon {
+  margin-right: 2px;
+}
+
+#craap-tooltip strong {
+  display: block;
+  font-size: 13px;
+}
+
+/* Tier colours */
+.craap-tip-good {
+  background: rgba(22, 27, 34, 0.94);
+  color: #3fb950;
+  border: 1px solid rgba(63, 185, 80, 0.4);
+}
+
+.craap-tip-warn {
+  background: rgba(22, 27, 34, 0.94);
+  color: #d29922;
+  border: 1px solid rgba(210, 153, 34, 0.4);
+}
+
+.craap-tip-bad {
+  background: rgba(22, 27, 34, 0.94);
+  color: #f85149;
+  border: 1px solid rgba(248, 81, 73, 0.4);
+}
+
+.craap-tip-good br ~ :not(strong),
+.craap-tip-warn br ~ :not(strong),
+.craap-tip-bad br ~ :not(strong) {
+  color: #e6edf3;
+}
+
+/* --- Scroll-to flash animation --- */
+.craap-scroll-flash {
+  border-radius: 3px;
+  position: relative;
+}
+
+.craap-flash-active {
+  animation: craap-flash 4s ease-out;
+  background-color: rgba(88, 166, 255, 0.35);
+  outline: 2px solid rgba(88, 166, 255, 0.6);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+@keyframes craap-flash {
+  0%   { background-color: rgba(88, 166, 255, 0.55); box-shadow: 0 0 20px rgba(88, 166, 255, 0.5); outline-color: rgba(88, 166, 255, 0.8); }
+  30%  { background-color: rgba(88, 166, 255, 0.4);  box-shadow: 0 0 14px rgba(88, 166, 255, 0.35); outline-color: rgba(88, 166, 255, 0.6); }
+  100% { background-color: transparent; box-shadow: none; outline-color: transparent; }
+}
+
+/* --- Chat Callouts: AI-annotated highlights --- */
+mark.craap-callout {
+  position: relative;
+  background: linear-gradient(120deg, rgba(147, 51, 234, 0.15) 0%, rgba(79, 70, 229, 0.15) 100%);
+  border-bottom: 2px solid rgba(147, 51, 234, 0.6);
+  border-radius: 3px;
+  padding: 2px 3px;
+  color: inherit;
+  cursor: help;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 4px rgba(147, 51, 234, 0.1);
+}
+
+mark.craap-callout:hover {
+  background: linear-gradient(120deg, rgba(147, 51, 234, 0.25) 0%, rgba(79, 70, 229, 0.25) 100%);
+  box-shadow: 0 2px 10px rgba(147, 51, 234, 0.25);
+  border-bottom-color: rgba(147, 51, 234, 0.8);
+}
+
+.craap-callout-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(147, 51, 234, 0.9);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  vertical-align: super;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+/* Callout tooltip (simpler than main tooltip) */
+#craap-callout-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 2147483647;
+  max-width: 320px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.95) 0%, rgba(79, 70, 229, 0.95) 100%);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.craap-callout-tip-label {
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.craap-callout-tip-note {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.95);
+}

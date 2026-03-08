@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRAAP Checker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body data-mode="popup">
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="logo">
+          <h1>CRAAP <span class="highlight">Checker</span></h1>
+        </div>
+      </div>
+      <p class="tagline">AI-Powered Source Credibility Analysis</p>
+    </header>
+
+    <!-- Analyze Button (initial state) -->
+    <div id="action-section">
+      <button id="analyze-btn" class="btn-analyze">
+        Analyze Source
+      </button>
+      <p class="hint">Evaluates the current page using the academic CRAAP test.</p>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-section" class="hidden">
+      <p class="loading-text">Analyzing source credibility&hellip;</p>
+      <div class="pipeline-steps">
+        <div class="pipeline-step" data-step="crawler">
+          <div class="step-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4.5 2A2.5 2.5 0 002 4.5v11A2.5 2.5 0 004.5 18h11a2.5 2.5 0 002.5-2.5v-11A2.5 2.5 0 0015.5 2h-11zM5 5.5A.5.5 0 015.5 5h9a.5.5 0 010 1h-9A.5.5 0 015 5.5zm0 3A.5.5 0 015.5 8h9a.5.5 0 010 1h-9A.5.5 0 015 8.5zm0 3a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5z"/></svg>
+          </div>
+          <span class="step-label">Scraping page content</span>
+          <div class="step-status">
+            <div class="step-spinner"></div>
+            <div class="step-check"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></div>
+          </div>
+        </div>
+        <div class="pipeline-step" data-step="analyzer">
+          <div class="step-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+          </div>
+          <span class="step-label">Scoring credibility</span>
+          <div class="step-status">
+            <div class="step-spinner"></div>
+            <div class="step-check"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></div>
+          </div>
+        </div>
+        <div class="pipeline-step" data-step="highlighter">
+          <div class="step-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-8.793 8.793L4 16l.793-3.621 8.793-8.793z"/></svg>
+          </div>
+          <span class="step-label">Highlighting claims</span>
+          <div class="step-status">
+            <div class="step-spinner"></div>
+            <div class="step-check"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></div>
+          </div>
+        </div>
+        <div class="pipeline-step" data-step="researcher">
+          <div class="step-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/></svg>
+          </div>
+          <span class="step-label">Finding sources</span>
+          <div class="step-status">
+            <div class="step-spinner"></div>
+            <div class="step-check"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></div>
+          </div>
+        </div>
+        <div class="pipeline-step" data-step="guide">
+          <div class="step-icon">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V14H9V4.804z"/></svg>
+          </div>
+          <span class="step-label">Building walkthrough</span>
+          <div class="step-status">
+            <div class="step-spinner"></div>
+            <div class="step-check"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <p class="loading-sub">Powered by Gemini AI multi-agent pipeline</p>
+    </div>
+
+    <!-- Results -->
+    <div id="results-section" class="hidden">
+
+      <!-- Tab Bar -->
+      <div class="tab-bar">
+        <button class="tab-btn tab-btn-active" data-tab="score">Score</button>
+        <button class="tab-btn" data-tab="research">Research</button>
+        <button class="tab-btn" data-tab="chat">Chat</button>
+      </div>
+
+      <!-- ====== SCORE TAB ====== -->
+      <div class="tab-content tab-content-active" data-tab-content="score">
+        <!-- Master Score -->
+        <div class="master-score-card">
+          <div class="score-ring-wrapper">
+            <svg class="score-ring" viewBox="0 0 140 140">
+              <circle class="score-ring-bg" cx="70" cy="70" r="60" />
+              <circle id="score-ring-fill" class="score-ring-fill" cx="70" cy="70" r="60" />
+            </svg>
+            <div class="score-value-wrapper">
+              <span id="master-score" class="score-value">0</span>
+              <span class="score-max">of 100</span>
+            </div>
+          </div>
+          <div class="score-label">Credibility Score</div>
+          <div id="score-badge" class="score-badge">&mdash;</div>
+        </div>
+
+        <!-- CRAAP Breakdown -->
+        <div class="breakdown">
+          <div class="metric-card" data-metric="currency">
+            <div class="metric-header">
+              <span class="metric-name">Currency</span>
+              <span id="currency-score" class="metric-score">&mdash;</span>
+            </div>
+            <div class="metric-bar"><div id="currency-bar" class="metric-bar-fill"></div></div>
+            <p id="currency-rationale" class="metric-rationale"></p>
+          </div>
+
+          <div class="metric-card" data-metric="relevance">
+            <div class="metric-header">
+              <span class="metric-name">Relevance</span>
+              <span id="relevance-score" class="metric-score">&mdash;</span>
+            </div>
+            <div class="metric-bar"><div id="relevance-bar" class="metric-bar-fill"></div></div>
+            <p id="relevance-rationale" class="metric-rationale"></p>
+          </div>
+
+          <div class="metric-card" data-metric="authority">
+            <div class="metric-header">
+              <span class="metric-name">Authority</span>
+              <span id="authority-score" class="metric-score">&mdash;</span>
+            </div>
+            <div class="metric-bar"><div id="authority-bar" class="metric-bar-fill"></div></div>
+            <p id="authority-rationale" class="metric-rationale"></p>
+          </div>
+
+          <div class="metric-card" data-metric="accuracy">
+            <div class="metric-header">
+              <span class="metric-name">Accuracy</span>
+              <span id="accuracy-score" class="metric-score">&mdash;</span>
+            </div>
+            <div class="metric-bar"><div id="accuracy-bar" class="metric-bar-fill"></div></div>
+            <p id="accuracy-rationale" class="metric-rationale"></p>
+          </div>
+
+          <div class="metric-card" data-metric="purpose">
+            <div class="metric-header">
+              <span class="metric-name">Purpose</span>
+              <span id="purpose-score" class="metric-score">&mdash;</span>
+            </div>
+            <div class="metric-bar"><div id="purpose-bar" class="metric-bar-fill"></div></div>
+            <p id="purpose-rationale" class="metric-rationale"></p>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+          <h3>Summary</h3>
+          <p id="summary-rationale"></p>
+        </div>
+
+        <!-- IEEE Citation -->
+        <button id="ieee-btn" class="btn-ieee hidden">
+          Copy IEEE Citation
+        </button>
+      </div>
+
+      <!-- ====== RESEARCH TAB ====== -->
+      <div class="tab-content" data-tab-content="research">
+        <!-- Empty state -->
+        <div id="research-empty" class="research-empty">
+          <p>Sources and quick research checks will appear here after analysis.</p>
+        </div>
+
+        <!-- Recommended Sources -->
+        <div id="sources-section" class="sources-card hidden">
+          <h3>Recommended Sources</h3>
+          <div id="sources-list"></div>
+        </div>
+
+        <!-- Research Walkthrough -->
+        <div id="walkthrough-section" class="walkthrough-card hidden">
+          <h3>Quick Research Checks</h3>
+          <p class="walkthrough-hint">Click any check to jump to that passage in the article</p>
+          <div id="walkthrough-list"></div>
+          <div class="walkthrough-nav">
+            <button id="wt-prev" class="wt-nav-btn" disabled>&larr; Prev</button>
+            <span id="wt-counter" class="wt-counter">1 / 1</span>
+            <button id="wt-next" class="wt-nav-btn">Next &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Re-analyze -->
+        <button id="reanalyze-btn" class="btn-reanalyze">Analyze Again</button>
+      </div>
+
+      <!-- ====== CHAT TAB ====== -->
+      <div class="tab-content" data-tab-content="chat">
+        <div id="chat-section" class="chat-card">
+          <h3>Ask About This Article</h3>
+          <div id="chat-messages" class="chat-messages">
+            <div class="chat-msg chat-bot">
+              <span class="chat-avatar">AI</span>
+              <div class="chat-bubble">I've analyzed this article. Ask me anything about its claims, sources, or how to use it in your research!</div>
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input id="chat-input" type="text" class="chat-input" placeholder="e.g. &quot;What's the main argument?&quot;" />
+            <button id="chat-send" class="chat-send-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Error State -->
+    <div id="error-section" class="hidden">
+      <div class="error-icon">&#9888;</div>
+      <p id="error-message" class="error-text">Something went wrong.</p>
+      <button id="retry-btn" class="btn-reanalyze">Retry</button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">Copied!</div>
+
+    <footer class="footer">
+      Powered by Gemini AI
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
