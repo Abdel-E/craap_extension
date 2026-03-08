@@ -13,6 +13,9 @@ Students often spend too much time deciding whether a source is trustworthy. Thi
 - Providing quick navigation checks and contextual callouts.
 - Supporting citation-focused research workflows.
 
+<img width="512" height="729" alt="image" src="https://github.com/user-attachments/assets/cd3d76c6-0e6e-4caf-8b8b-5fa47f7a770f" />
+<img width="1649" height="1041" alt="image" src="https://github.com/user-attachments/assets/68033b41-6601-4d2a-bb4d-8b75f80b780a" />
+
 ## Project structure
 
 - `extension/` - Chrome extension frontend (popup UI, content scripts, styles).
